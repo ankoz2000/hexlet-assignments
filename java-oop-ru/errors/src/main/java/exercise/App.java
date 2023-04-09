@@ -4,7 +4,7 @@ package exercise;
 public class App {
     public static void printSquare(Circle circle) {
         try {
-            System.out.print(circle.getSquare());
+            System.out.print((int) Math.round(circle.getSquare()));
         } catch (NegativeRadiusException e) {
             System.out.print("Не удалось посчитать площадь");
         }

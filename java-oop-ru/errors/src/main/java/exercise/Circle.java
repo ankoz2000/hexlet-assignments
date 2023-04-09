@@ -21,8 +21,8 @@ public class Circle {
         return radius;
     }
 
-    public int getSquare() throws NegativeRadiusException {
-        return (int) Math.round(getRadius() * getRadius() * Math.PI);
+    public double getSquare() throws NegativeRadiusException {
+        return getRadius() * getRadius() * Math.PI;
     }
 }
 // END
