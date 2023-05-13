@@ -23,7 +23,7 @@ public class CompaniesServlet extends HttpServlet {
         List<String> companies = getCompanies();
         List<String> result = new ArrayList<>();
         PrintWriter pw = new PrintWriter(response.getWriter());
-        if (request.getQueryString().contains("search")) {
+        if (request.getQueryString() != null && request.getQueryString().contains("search")) {
             String toContains = request.getParameter("search");
             if (toContains == null) {
                 result.add("Companies not found");
