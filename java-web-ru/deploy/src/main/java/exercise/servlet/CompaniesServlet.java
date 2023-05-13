@@ -25,12 +25,13 @@ public class CompaniesServlet extends HttpServlet {
         PrintWriter pw = new PrintWriter(response.getWriter());
         if (request.getQueryString() != null && request.getQueryString().contains("search")) {
             String toContains = request.getParameter("search");
-            if (toContains == null) {
-                result.add("Companies not found");
-            } else {
+            if (toContains != null) {
                 result = companies.stream()
                         .filter(c -> c.contains(toContains))
                         .collect(Collectors.toList());
+                if (result.isEmpty()) {
+                    result.add("Companies not found");
+                }
             }
         } else {
             result = companies;
