@@ -35,8 +35,7 @@ public class CompaniesServlet extends HttpServlet {
         } else {
             result = companies;
         }
-        pw.println(result.stream()
-                .collect(Collectors.joining(", ")));
+        pw.print(result);
         // END
     }
 }
