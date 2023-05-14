@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,12 +43,9 @@ public class UsersServlet extends HttpServlet {
     private List getUsers() throws JsonProcessingException, IOException {
         // BEGIN
         Path path = Paths.get("src/main/resources/users.json");
-        List<String> lines = Files.readAllLines(path);
 
         ObjectMapper om = new ObjectMapper();
-        return lines.stream()
-                .map(l -> om.convertValue(l, Map.class))
-                .collect(Collectors.toList());
+        return om.readValue(Files.readString(path), List.class);
         // END
     }
 
