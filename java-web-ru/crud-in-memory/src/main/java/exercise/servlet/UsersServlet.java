@@ -164,7 +164,7 @@ public class UsersServlet extends HttpServlet {
             newUser.put("lastName", lastName);
             newUser.put("email", email);
             request.setAttribute("user", newUser);
-            getUsers().add(newUser);
+            users.add(newUser);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/show.jsp");
             requestDispatcher.forward(request, response);
         }
@@ -218,7 +218,7 @@ public class UsersServlet extends HttpServlet {
             user.put("firstName", firstName);
             user.put("lastName", lastName);
             user.put("email", email);
-            getUsers().add(user);
+            users.add(user);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/show.jsp");
             requestDispatcher.forward(request, response);
         }
