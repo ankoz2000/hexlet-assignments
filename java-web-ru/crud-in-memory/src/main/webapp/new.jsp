@@ -18,11 +18,11 @@
             <form action="/users/new" method="post">
                 <div class="mb-3">
                     <label>Имя</label>
-                    <input class="form-control" type="text" name="firstName" value="${firstName}">
+                    <input class="form-control" type="text" name="firstName" value="${user.get("firstName")}">
                     <label>Фамилия</label>
-                    <input class="form-control" type="text" name="lastName" value="${lastName}">
+                    <input class="form-control" type="text" name="lastName" value="${user.get("lastName")}">
                     <label>E-mail</label>
-                    <input class="form-control" type="text" name="email" value="${email}">
+                    <input class="form-control" type="text" name="email" value="${user.get("email")}">
                 </div>
                 <div>
                     <span class="ui-state-error-text">${error}</span>

@@ -26,7 +26,7 @@
             </table>
             <a class="btn btn-primary" href='/users/delete?id=${user.get("id")}'>Удалить</a>
             <!-- BEGIN -->
-            
+            <a href="/users/edit">Редактировать</a>
             <!-- END -->
         </div>
     </body>

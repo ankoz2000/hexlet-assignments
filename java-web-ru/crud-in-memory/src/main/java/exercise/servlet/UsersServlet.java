@@ -125,6 +125,9 @@ public class UsersServlet extends HttpServlet {
                  throws IOException, ServletException {
 
         // BEGIN
+        Map<String, String> newUser = new HashMap<>();
+
+        request.setAttribute("user", newUser);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/new.jsp");
         requestDispatcher.forward(request, response);
         // END
@@ -138,22 +141,26 @@ public class UsersServlet extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
+        Map<String, String> newUser = new HashMap<>();
         if (firstName == null || lastName == null) {
             response.setStatus(422);
             request.setAttribute("error", "Некорректные данные пользователя");
-            request.setAttribute("firstName", firstName);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("email", email);
+
+            newUser.put("firstName", firstName);
+            newUser.put("lastName", lastName);
+            newUser.put("email", email);
+
+            request.setAttribute("user", newUser);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/new.jsp");
             requestDispatcher.forward(request, response);
         } else {
             String id = getNextId();
-            Map<String, String> user = new HashMap<>();
-            user.put("id", id);
-            user.put("firstName", firstName);
-            user.put("lastName", lastName);
-            request.setAttribute("email", email);
-            getUsers().add(user);
+            newUser.put("id", id);
+            newUser.put("firstName", firstName);
+            newUser.put("lastName", lastName);
+            newUser.put("email", email);
+            request.setAttribute("user", newUser);
+            getUsers().add(newUser);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/show.jsp");
             requestDispatcher.forward(request, response);
         }
@@ -200,9 +207,7 @@ public class UsersServlet extends HttpServlet {
         if (firstName == null || lastName == null) {
             response.setStatus(422);
             request.setAttribute("error", "Некорректные данные пользователя");
-            request.setAttribute("firstName", firstName);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("email", email);
+            request.setAttribute("user", user);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/edit.jsp");
             requestDispatcher.forward(request, response);
         } else {
