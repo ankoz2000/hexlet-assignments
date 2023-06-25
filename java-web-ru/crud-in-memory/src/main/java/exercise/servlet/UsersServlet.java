@@ -127,6 +127,10 @@ public class UsersServlet extends HttpServlet {
         // BEGIN
         Map<String, String> newUser = new HashMap<>();
 
+        newUser.put("lastName", "");
+        newUser.put("firstName", "");
+        newUser.put("email", "");
+
         request.setAttribute("user", newUser);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/new.jsp");
         requestDispatcher.forward(request, response);
