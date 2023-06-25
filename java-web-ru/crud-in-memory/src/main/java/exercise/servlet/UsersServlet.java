@@ -218,7 +218,6 @@ public class UsersServlet extends HttpServlet {
             user.put("firstName", firstName);
             user.put("lastName", lastName);
             user.put("email", email);
-            users.add(user);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/show.jsp");
             requestDispatcher.forward(request, response);
         }
