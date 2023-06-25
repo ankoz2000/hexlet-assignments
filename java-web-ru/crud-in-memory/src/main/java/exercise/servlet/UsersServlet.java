@@ -142,7 +142,7 @@ public class UsersServlet extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         Map<String, String> newUser = new HashMap<>();
-        if (firstName == null || lastName == null) {
+        if (firstName == null || lastName == null || firstName.equals("") || lastName.equals("")) {
             response.setStatus(422);
             request.setAttribute("error", "Некорректные данные пользователя");
 
@@ -204,7 +204,7 @@ public class UsersServlet extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
-        if (firstName == null || lastName == null) {
+        if (firstName == null || lastName == null || firstName.equals("") || lastName.equals("")) {
             response.setStatus(422);
             request.setAttribute("error", "Некорректные данные пользователя");
             request.setAttribute("user", user);
