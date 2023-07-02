@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 
 import java.util.Map;
@@ -68,7 +67,7 @@ public class SessionServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else {
             request.getSession().setAttribute("flash", "Неверные логин или пароль");
-            request.getSession().setAttribute("email", email);
+            request.setAttribute("email", email);
             response.setStatus(422);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
