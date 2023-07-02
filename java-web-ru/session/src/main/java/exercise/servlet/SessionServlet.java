@@ -69,9 +69,9 @@ public class SessionServlet extends HttpServlet {
         } else {
             request.setAttribute("flash", "Неверные логин или пароль");
             request.setAttribute("email", email);
+            response.setStatus(422);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
-            response.setStatus(422);
             requestDispatcher.forward(request, response);
         }
         // END
@@ -82,8 +82,6 @@ public class SessionServlet extends HttpServlet {
             throws IOException, ServletException {
 
         // BEGIN
-        String email = (String) request.getAttribute("email");
-
         request.removeAttribute("userId");
         request.setAttribute("flash", "Вы успешно вышли");
 
