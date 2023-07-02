@@ -56,19 +56,19 @@ public class SessionServlet extends HttpServlet {
 
         // BEGIN
         String standartPassword = "password";
-        String email = (String) request.getAttribute("email");
-        String userPassword = (String) request.getAttribute("password");
+        String email = request.getParameter("email");
+        String userPassword = request.getParameter("password");
 
         Map<String, String> user = users.findByEmail(email);
         if (user != null && standartPassword.equals(userPassword)) {
-            request.setAttribute("userId", user.get("id"));
-            request.setAttribute("flash", "Вы успешно вошли");
+            request.getSession().setAttribute("userId", user.get("id"));
+            request.getSession().setAttribute("flash", "Вы успешно вошли");
 
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/welcome.jsp");
             requestDispatcher.forward(request, response);
         } else {
-            request.setAttribute("flash", "Неверные логин или пароль");
-            request.setAttribute("email", email);
+            request.getSession().setAttribute("flash", "Неверные логин или пароль");
+            request.getSession().setAttribute("email", email);
             response.setStatus(422);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
@@ -82,10 +82,10 @@ public class SessionServlet extends HttpServlet {
             throws IOException, ServletException {
 
         // BEGIN
-        request.removeAttribute("userId");
-        request.setAttribute("flash", "Вы успешно вышли");
+        request.getSession().removeAttribute("userId");
+        request.getSession().setAttribute("flash", "Вы успешно вышли");
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/welcome.jsp");
         requestDispatcher.forward(request, response);
         // END
     }
