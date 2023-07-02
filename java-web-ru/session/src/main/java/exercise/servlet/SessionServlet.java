@@ -69,9 +69,9 @@ public class SessionServlet extends HttpServlet {
         } else {
             request.setAttribute("flash", "Неверные логин или пароль");
             request.setAttribute("email", email);
-            response.sendError(422);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
+            response.setStatus(422);
             requestDispatcher.forward(request, response);
         }
         // END
