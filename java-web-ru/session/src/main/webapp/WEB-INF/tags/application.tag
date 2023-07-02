@@ -42,8 +42,8 @@
         <div class="container mt-3">
             <!-- BEGIN -->
             <div class="alert alert-info" role="alert">
-                <% session.getAttribute("flash"); %>
-                <% session.removeAttribute("flash"); %>
+                ${sessionScope.flash}
+                <% session.removeAttribute("attribute"); %>
             </div>
             <!-- END -->
             <jsp:doBody />
