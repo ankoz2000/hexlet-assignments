@@ -67,13 +67,14 @@ public class ArticlesServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Connection connection = (Connection) context.getAttribute("dbConnection");
         // BEGIN
-        Integer page = (Integer) request.getAttribute("page");
+        String page = request.getParameter("page");
+        Integer realPage = (page == null ? 1 : Integer.decode(page));
         List<Map<String, String>> articles = new ArrayList<>();
-        String query = "SELECT id, title, body FROM articles LIMIT ? OFFSET ? ";
+        String query = "SELECT id, title, body FROM articles ORDER BY id LIMIT ? OFFSET ? ";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, 10);
-            statement.setInt(2, (page - 1) * 10);
+            statement.setInt(2, (realPage - 1) * 10);
 
             ResultSet rs = statement.executeQuery();
 
@@ -90,6 +91,7 @@ public class ArticlesServlet extends HttpServlet {
             return;
         }
         request.setAttribute("articles", articles);
+        request.setAttribute("page", realPage);
         // END
         TemplateEngineUtil.render("articles/index.html", request, response);
     }
@@ -101,7 +103,25 @@ public class ArticlesServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Connection connection = (Connection) context.getAttribute("dbConnection");
         // BEGIN
-        
+        String query = "SELECT id, title, body FROM articles WHERE id = ?";
+        Map<String, String> article = new HashMap<>();
+        int indx = request.getRequestURI().lastIndexOf('/');
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, request.getRequestURI().substring(indx+1));
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                article = Map.of(
+                                "id", rs.getString("id"),
+                                "title", rs.getString("title"),
+                                "body", rs.getString("body")
+                        );
+            }
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        request.setAttribute("article", article);
         // END
         TemplateEngineUtil.render("articles/show.html", request, response);
     }

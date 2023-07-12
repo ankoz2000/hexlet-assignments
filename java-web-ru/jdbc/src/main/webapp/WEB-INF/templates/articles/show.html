@@ -11,12 +11,16 @@ layout:decorate="~{layouts/application.html}">
     <thead>
     <th>ID</th>
     <th>Название</th>
+    <th>Наполнение</th>
     </thead>
     <tbody>
     <tr th:object="${article}">
       <td th:text="*{id}"></td>
       <td>
         <a th:text="*{title}" th:href="@{/articles/{id}(id=*{id})}"></a>
+      </td>
+      <td>
+        <p th:text="*{body}"></p>
       </td>
     </tr>
   </table>
