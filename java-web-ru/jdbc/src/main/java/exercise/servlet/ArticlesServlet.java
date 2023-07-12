@@ -110,6 +110,10 @@ public class ArticlesServlet extends HttpServlet {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, request.getRequestURI().substring(indx+1));
             ResultSet rs = statement.executeQuery();
+            if (!rs.first()) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
             while (rs.next()) {
                 article = Map.of(
                                 "id", rs.getString("id"),
@@ -118,7 +122,7 @@ public class ArticlesServlet extends HttpServlet {
                         );
             }
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
         request.setAttribute("article", article);
