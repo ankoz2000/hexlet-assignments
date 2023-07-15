@@ -25,14 +25,13 @@ dependencies {
   implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
   implementation 'com.h2database:h2:1.4.200'
 
-  implementation 'io.ebean:ebean:13.6.5'
-  implementation 'io.ebean:ebean-ddl-generator:13.6.5'
-  implementation 'io.ebean:ebean-querybean:13.6.5'
+  implementation 'io.ebean:ebean:13.11.0'
+  implementation 'io.ebean:ebean-ddl-generator:13.11.0'
+  implementation 'io.ebean:ebean-querybean:13.11.0'
   implementation 'io.ebean:ebean-migration:13.6.2'
   implementation 'io.ebean:ebean-annotation:8.3'
   // Эта зависимость нужна для работы генератора запросов
-  annotationProcessor 'io.ebean:querybean-generator:13.6.5'
-
+  annotationProcessor 'io.ebean:querybean-generator:13.11.0'
 
   implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
   implementation 'javax.activation:activation:1.1.1'
