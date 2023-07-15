@@ -108,19 +108,17 @@ public class ArticlesServlet extends HttpServlet {
         int indx = request.getRequestURI().lastIndexOf('/');
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, request.getRequestURI().substring(indx+1));
+            statement.setInt(1, Integer.valueOf(request.getRequestURI().substring(indx+1)));
             ResultSet rs = statement.executeQuery();
             if (!rs.first()) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            while (rs.next()) {
-                article = Map.of(
-                                "id", rs.getString("id"),
-                                "title", rs.getString("title"),
-                                "body", rs.getString("body")
-                        );
-            }
+            article = Map.of(
+                            "id", rs.getString("id"),
+                            "title", rs.getString("title"),
+                            "body", rs.getString("body")
+                    );
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
