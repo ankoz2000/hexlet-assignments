@@ -133,7 +133,7 @@ public class ArticlesServlet extends HttpServlet {
 
         // BEGIN
         Category category = new QCategory()
-                .id.equalTo(Integer.parseInt(categoryId))
+                .id.equalTo(Long.parseLong(categoryId))
                 .findOne();
         Article article = new Article(title, body, category);
         article.save();
