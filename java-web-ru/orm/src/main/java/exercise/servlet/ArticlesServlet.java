@@ -87,7 +87,7 @@ public class ArticlesServlet extends HttpServlet {
         // BEGIN
         PagedList<Article> articles = new QArticle()
                 .setFirstRow(offset)
-                .setMaxRows(normalizedPage)
+                .setMaxRows(articlesPerPage)
                 .findPagedList();
         request.setAttribute("articles", articles.getList());
         // END
