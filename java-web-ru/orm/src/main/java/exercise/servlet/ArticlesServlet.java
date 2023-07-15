@@ -136,9 +136,7 @@ public class ArticlesServlet extends HttpServlet {
                 .id.eq(Long.parseLong(categoryId))
                 .findOne();
         Article article = new Article(title, body, category);
-        category.getArticles().add(article);
         article.save();
-        category.save();
         // END
 
         session.setAttribute("flash", "Статья успешно создана");
