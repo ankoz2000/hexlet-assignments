@@ -85,11 +85,15 @@ public class ArticlesServlet extends HttpServlet {
         int offset = (normalizedPage - 1) * articlesPerPage;
 
         // BEGIN
-        PagedList<Article> articles = new QArticle()
+       PagedList<Article> pagedArticles = new QArticle()
                 .setFirstRow(offset)
                 .setMaxRows(articlesPerPage)
+                .orderBy()
+                .id.asc()
                 .findPagedList();
-        request.setAttribute("articles", articles.getList());
+
+        List<Article> articles = pagedArticles.getList();
+        request.setAttribute("articles", articles);
         // END
         request.setAttribute("page", normalizedPage);
         TemplateEngineUtil.render("articles/index.html", request, response);
@@ -105,6 +109,7 @@ public class ArticlesServlet extends HttpServlet {
         Article article = new QArticle()
                 .id.equalTo(id)
                 .findOne();
+
         request.setAttribute("article", article);
         // END
         TemplateEngineUtil.render("articles/show.html", request, response);
@@ -115,8 +120,7 @@ public class ArticlesServlet extends HttpServlet {
                     throws IOException, ServletException {
 
         // BEGIN
-        List<Category> categories = new QCategory()
-                .findList();
+        List<Category> categories = new QCategory().findList();
         request.setAttribute("categories", categories);
         // END
         TemplateEngineUtil.render("articles/new.html", request, response);
@@ -133,8 +137,9 @@ public class ArticlesServlet extends HttpServlet {
 
         // BEGIN
         Category category = new QCategory()
-                .id.eq(Long.parseLong(categoryId))
+                .id.equalTo(Long.parseLong(categoryId))
                 .findOne();
+
         Article article = new Article(title, body, category);
         article.save();
         // END
