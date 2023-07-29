@@ -59,7 +59,7 @@ public final class UserController {
                 .check(fn -> !fn.isEmpty(), "Имя не должно быть пустым");
         Validator<String> lastNameValidator = ctx.formParamAsClass("lastName", String.class)
                 .check(ln -> !ln.isEmpty(), "Фамилия не должна быть пустой");
-        Validator<String> isValidEmail = ctx.fromParamAsClass("email", String.class)
+        Validator<String> isValidEmail = ctx.formParamAsClass("email", String.class)
                 .check(e -> EmailValidator.getInstance().isValid(email));
         Validator<String> passwordValidator = ctx.formParamAsClass("password", String.class)
                 .check(pwd -> pwd.length() >= 4, "Пароль должен быть больше 4 цифр")
