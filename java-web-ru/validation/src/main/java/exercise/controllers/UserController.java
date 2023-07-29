@@ -77,8 +77,8 @@ public final class UserController {
             ctx.status(422);
             // Передаем ошибки и данные компании
             ctx.attribute("errors", errors);
-            Company invalidCompany = new Company(name, workers);
-            ctx.attribute("user", invalidCompany);
+            User invalidUser = new User(firstName, lastName, email, password);
+            ctx.attribute("user", invalidUser);
             ctx.render("users/new.html");
             return;
         }
