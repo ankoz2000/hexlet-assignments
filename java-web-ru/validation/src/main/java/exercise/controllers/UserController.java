@@ -6,7 +6,6 @@ import java.util.Map;
 import io.javalin.validation.Validator;
 import io.javalin.validation.ValidationError;
 import io.javalin.validation.JavalinValidation;
-import org.apache.commons.validator.Validator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.commons.lang3.StringUtils;
 import io.javalin.http.Context;
