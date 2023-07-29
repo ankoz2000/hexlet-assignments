@@ -62,7 +62,7 @@ public final class UserController {
         Validator<String> isValidEmail = ctx.fromParamAsClass("email", String.class)
                 .check(e -> EmailValidator.getInstance().isValid(email));
         Validator<String> passwordValidator = ctx.formParamAsClass("password", String.class)
-                .check(pwd -> !pwd.length() >= 4, "Пароль должен быть больше 4 цифр")
+                .check(pwd -> pwd.length() >= 4, "Пароль должен быть больше 4 цифр")
                 .check(pwd -> StringUtils.isNumeric(pwd), "Пароль должен содержать только цифры");
 
         Map<String, List<ValidationError<? extends Object>>> errors = JavalinValidation.collectErrors(
