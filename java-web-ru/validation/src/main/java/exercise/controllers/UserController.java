@@ -71,7 +71,6 @@ public final class UserController {
                 firstNameValidator,
                 lastNameValidator,
                 isValidEmail,
-                passwordValidator,
                 emailValidator
                 );
 
