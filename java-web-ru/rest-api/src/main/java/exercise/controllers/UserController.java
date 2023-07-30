@@ -21,7 +21,6 @@ public class UserController implements CrudHandler {
         String json = DB.json().toJson(users);
 
         ctx.json(json);
-        ctx.
         // END
     };
 
