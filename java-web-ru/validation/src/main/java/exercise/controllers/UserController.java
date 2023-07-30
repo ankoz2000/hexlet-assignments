@@ -70,8 +70,8 @@ public final class UserController {
         Map<String, List<ValidationError<? extends Object>>> errors = JavalinValidation.collectErrors(
                 firstNameValidator,
                 lastNameValidator,
-                isValidEmail,
-                emailValidator
+                emailValidator,
+                passwordValidator
                 );
 
         if (!errors.isEmpty()) {
