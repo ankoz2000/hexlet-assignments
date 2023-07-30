@@ -19,7 +19,7 @@ public final class App {
 
         // BEGIN
         app.routes(() -> {
-            crud("users/{user-id}", new UserController());
+            crud("users/{id}", new UserController());
         });
         // END
     }
