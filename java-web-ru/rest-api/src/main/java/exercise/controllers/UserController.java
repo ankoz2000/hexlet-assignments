@@ -28,7 +28,7 @@ public class UserController implements CrudHandler {
 
         // BEGIN
         User user = new QUser()
-                .id.equalTo(id)
+                .id.equalTo(Long.parseLong(id))
                 .findOne();
 
         String json = DB.json().toJson(user);
@@ -62,7 +62,7 @@ public class UserController implements CrudHandler {
     public void delete(Context ctx, String id) {
         // BEGIN
         int rows = new QUser()
-                .id.equalTo(id)
+                .id.equalTo(Long.parseLong(id))
                 .delete();
         // END
     };
