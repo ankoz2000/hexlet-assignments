@@ -45,5 +45,11 @@ public class PeopleController {
         );
     }
 
+    @GetMapping(path = "")
+    public List<Map<String, Object>> getPeople() {
+        String query = "SELECT first_name, last_name from person";
+        return jdbc.queryForList(query);
+    }
+
     // END
 }
