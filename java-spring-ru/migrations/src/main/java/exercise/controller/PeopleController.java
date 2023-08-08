@@ -38,8 +38,8 @@ public class PeopleController {
                 (rs, rowNum) -> {
                     Map<String, Object> res = new HashMap<>();
                     res.put("id", rs.getLong("id"));
-                    res.put("first_name", rs.getLong("first_name"));
-                    res.put("last_name", rs.getLong("last_name"));
+                    res.put("first_name", rs.getString("first_name"));
+                    res.put("last_name", rs.getString("last_name"));
                     return res;
                 }
         );
