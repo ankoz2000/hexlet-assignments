@@ -1,0 +1,27 @@
+databaseChangeLog:
+  -  preConditions:
+    -  runningAs:
+         username:  liquibase
+
+  -  changeSet:
+       id:  1
+       author:  nvoxland
+       changes:
+          - createTable:
+             tableName: person
+             columns:
+                - column:
+                   name: id
+                   type: int
+                   autoIncrement: true
+                   constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                   name: first_name
+                   type: varchar(50)
+                - column:
+                   name: last_name
+                   type: varchar(50)
+                   constraints:
+                      nullable: false
