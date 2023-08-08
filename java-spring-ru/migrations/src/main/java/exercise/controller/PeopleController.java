@@ -30,8 +30,18 @@ public class PeopleController {
     // BEGIN
     @GetMapping(path = "/{id}")
     public void createPerson(@PathVariable Integer id) {
-        String query = "SELECT * FROM person WHERE id = ?";
-        jdbc.get(query, id);
+        String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
+        ResultSet rs = stmt.executeQuery(query);
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    Map<String, Object> res = new HashMap<>();
+                    res.put("id", rs.getLong("id"));
+                    res.put("first_name", rs.getLong("first_name"));
+                    res.put("last_name", rs.getLong("last_name"));
+                    return res;
+                }
+        );
     }
 
     // END
