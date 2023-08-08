@@ -32,7 +32,7 @@ public class PeopleController {
     public Map<String, Object> getPerson(@PathVariable Integer id) {
         String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
         ResultSet rs = stmt.executeQuery(query);
-        return jdbcTemplate.query(
+        return jdbc.query(
                 sql,
                 (rs, rowNum) -> {
                     Map<String, Object> res = new HashMap<>();
