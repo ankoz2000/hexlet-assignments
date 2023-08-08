@@ -32,8 +32,9 @@ public class PeopleController {
     @GetMapping(path = "/{id}")
     public List getPerson(@PathVariable Integer id) {
         String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
-        return jdbc.query(
+        return jdbc.queryForObject(
                 query,
+                id,
                 (rs, rowNum) -> {
                     Map<String, Object> res = new HashMap<>();
                     res.put("id", rs.getLong("id"));
