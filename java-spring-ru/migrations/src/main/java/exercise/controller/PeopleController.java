@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,8 @@ public class PeopleController {
     @GetMapping(path = "/{id}")
     public Map<String, Object> getPerson(@PathVariable Integer id) {
         String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
-        ResultSet rs = stmt.executeQuery(query);
         return jdbc.query(
-                sql,
+                query,
                 (rs, rowNum) -> {
                     Map<String, Object> res = new HashMap<>();
                     res.put("id", rs.getLong("id"));
