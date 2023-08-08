@@ -30,7 +30,7 @@ public class PeopleController {
 
     // BEGIN
     @GetMapping(path = "/{id}")
-    public Map<String, Object> getPerson(@PathVariable Integer id) {
+    public List getPerson(@PathVariable Integer id) {
         String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
         return jdbc.query(
                 query,
