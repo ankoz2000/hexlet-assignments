@@ -34,7 +34,7 @@ public class PeopleController {
         String query = "SELECT id, first_name, last_name FROM person WHERE id = ?";
         return jdbc.queryForObject(
                 query,
-                id,
+                new Object[]{id},
                 (rs, rowNum) -> {
                     Map<String, Object> res = new HashMap<>();
                     res.put("id", rs.getLong("id"));
