@@ -133,7 +133,6 @@ public class AppTest {
         var existingUserId = TestUtils.getUserIdByEmail(mockMvc, existingUserEmail);
 
         PersonDto personDto = new PersonDto();
-        personDto.setId(existingUserId);
         personDto.setEmail(existingUserEmail);
         personDto.setLastName("PikiWiki");
 
