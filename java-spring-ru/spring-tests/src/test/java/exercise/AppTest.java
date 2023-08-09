@@ -152,13 +152,12 @@ public class AppTest {
         assertThat(responsePatch.getStatus()).isEqualTo(200);
 
         MockHttpServletResponse responseGet = mockMvc
-                .perform(patch("/people/{id}", existingUserId))
+                .perform(get("/people/{id}", existingUserId))
                 .andReturn()
                 .getResponse();
 
-        PersonDto dto = mapper.readValue(responseGet.getContentAsString(), PersonDto.class);
-        assertThat(dto.getFirstName()).isEqualTo(changedFirstName);
-        assertThat(dto.getLastName()).isEqualTo(changedLastName);
+        assertThat(responseGet.getContentAsString()).contains(personDto.getFirstName());
+        assertThat(responseGet.getContentAsString()).contains(personDto.getLastName());
     }
 
     @Test
