@@ -140,10 +140,8 @@ public class AppTest {
         personDto.setLastName(changedLastName);
 
         MockHttpServletResponse responsePatch = mockMvc
-                .perform(
-                        patch("/people/{id}", existingUserId)
-                                .requestAttr("personDto", mapper.writeValueAsString(personDto))
-                )
+                .perform(patch("/people/{id}", existingUserId))
+                .content(mapper.writeValueAsString(personDto))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
