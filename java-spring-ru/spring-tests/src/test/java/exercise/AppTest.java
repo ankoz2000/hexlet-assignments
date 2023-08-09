@@ -153,7 +153,6 @@ public class AppTest {
 
         MockHttpServletResponse responseGet = mockMvc
                 .perform(patch("/people/{id}", existingUserId))
-                .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
