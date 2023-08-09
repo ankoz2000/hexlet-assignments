@@ -166,15 +166,18 @@ public class AppTest {
         var existingUserEmail = "jack@mail.com";
         var existingUserId = TestUtils.getUserIdByEmail(mockMvc, existingUserEmail);
 
-        MockHttpServletResponse responseGet = mockMvc
+        MockHttpServletResponse responseDelete = mockMvc
                 .perform(delete("/people/{id}", existingUserId))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
 
-        assertThat(responseGet.getStatus()).isEqualTo(200);
+        assertThat(responseDelete.getStatus()).isEqualTo(200);
 
-        assertNull(TestUtils.getUserById(existingUserId));
+        Integer existingUserId2 = TestUtils.getUserIdByEmail(mockMvc, existingUserEmail);
+
+        assertNull(repository.findByEmail(existingUserEmail));
+
     }
     // END
 }
