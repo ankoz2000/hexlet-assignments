@@ -34,8 +34,11 @@ public class PeopleController {
 
     // BEGIN
     @PostMapping(path = "")
-    public Person addPerson(@RequestBody Person person) {
-        return personRepository.save(person);
+    public Person addPerson(@RequestBody PersonDto person) {
+        Person person1 = new Person();
+        person1.setFirstName(person.getFirstName());
+        person1.setLastName(person.getLastName());
+        return personRepository.save(person1);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -44,10 +47,13 @@ public class PeopleController {
     }
 
     @PatchMapping(path = "/{id}")
-    public void updatePerson(@PathVariable long id) {
-        Person person = new Person();
-        person.setId(id);
-        personRepository.save(person);
+    public void updatePerson(@PathVariable long id,
+                             @RequestBody PersonDto person) {
+        Person person1 = new Person();
+        person1.setId(id);
+        person1.setLastName(person.getLastName());
+        person1.setFirstName(person.getFirstName());
+        personRepository.save(person1);
     }
     // END
 }
