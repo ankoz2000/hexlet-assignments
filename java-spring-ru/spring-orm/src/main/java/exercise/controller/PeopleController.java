@@ -44,10 +44,10 @@ public class PeopleController {
     }
 
     @PatchMapping(path = "/{id}")
-    public Person updatePerson(@PathVariable long id) {
+    public void updatePerson(@PathVariable long id) {
         Person person = new Person();
         person.setId(id);
-        return personRepository.save(person);
+        personRepository.save(person);
     }
     // END
 }
