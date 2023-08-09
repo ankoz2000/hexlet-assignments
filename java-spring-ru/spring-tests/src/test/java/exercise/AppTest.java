@@ -46,6 +46,8 @@ import com.github.database.rider.core.api.dataset.DataSet;
 @DataSet("people.yml")
 public class AppTest {
 
+    public static final String changedFirstName = "Test1";
+    public static final String changedLastName = "PikiWiki";
     // Автоматическое создание экземпляра класса MockMvc
     @Autowired
     private MockMvc mockMvc;
@@ -134,9 +136,10 @@ public class AppTest {
 
         PersonDto personDto = new PersonDto();
         personDto.setEmail(existingUserEmail);
-        personDto.setLastName("PikiWiki");
+        personDto.setFirstName(changedFirstName);
+        personDto.setLastName(changedLastName);
 
-        MockHttpServletResponse responseGet = mockMvc
+        MockHttpServletResponse responsePatch = mockMvc
                 .perform(
                         patch("/people/{id}", existingUserId)
                                 .requestAttr("personDto", mapper.writeValueAsString(personDto))
@@ -145,7 +148,17 @@ public class AppTest {
                 .andReturn()
                 .getResponse();
 
-        assertThat(responseGet.getStatus()).isEqualTo(200);
+        assertThat(responsePatch.getStatus()).isEqualTo(200);
+
+        MockHttpServletResponse responseGet = mockMvc
+                .perform(patch("/people/{id}", existingUserId))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        PersonDto dto = mapper.readValue(responseGet.getContentAsString(), PersonDto.class);
+        assertThat(dto.getFirstName()).isEqualTo(changedFirstName);
+        assertThat(dto.getLastName()).isEqualTo(changedLastName);
     }
 
     @Test
