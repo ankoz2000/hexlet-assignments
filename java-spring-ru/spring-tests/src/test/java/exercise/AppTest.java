@@ -174,10 +174,7 @@ public class AppTest {
 
         assertThat(responseDelete.getStatus()).isEqualTo(200);
 
-        Integer existingUserId2 = TestUtils.getUserIdByEmail(mockMvc, existingUserEmail);
-
         assertNull(repository.findByEmail(existingUserEmail));
-
     }
     // END
 }
