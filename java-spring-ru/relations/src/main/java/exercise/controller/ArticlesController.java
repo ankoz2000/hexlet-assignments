@@ -41,7 +41,7 @@ public class ArticlesController {
     @PatchMapping(path = "/{id}")
     public void getArticles(@PathVariable long id, @RequestBody Article dto) {
         dto.setId(id);
-        articleRepository.update(dto);
+        articleRepository.save(dto);
     }
 
     @GetMapping(path = "/{id}")
