@@ -35,13 +35,13 @@ public class ArticlesController {
     // BEGIN
     @PostMapping(path = "")
     public void getArticles(@RequestBody Article dto) {
-        return articleRepository.save(dto);
+        articleRepository.save(dto);
     }
 
     @PatchMapping(path = "/{id}")
     public void getArticles(@PathVariable long id, @RequestBody Article dto) {
         dto.setId(id);
-        return articleRepository.update(dto);
+        articleRepository.update(dto);
     }
 
     @GetMapping(path = "/{id}")
