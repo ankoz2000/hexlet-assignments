@@ -36,7 +36,7 @@ public class CourseController {
         String path = targetCourse.getPath();
         List<Course> coursesToPass = Arrays.asList(path.split("."))
                 .stream()
-                .map(id -> courseRepository.findById(Integer.parseInt(id)))
+                .map(pid -> courseRepository.findById(Integer.parseInt(pid)))
                 .collect(Collectors.toList());
         return coursesToPass;
     }
