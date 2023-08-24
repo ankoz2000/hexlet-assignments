@@ -31,7 +31,7 @@ public class CourseController {
 
     // BEGIN
     @GetMapping(path = "/{id}/previous/")
-    public List<Course> getCourse(@PathVariable long id) {
+    public List<Course> getCourses(@PathVariable long id) {
         Course targetCourse = courseRepository.findById(id);
         String path = targetCourse.getPath();
         List<Course> coursesToPass = Arrays.asList(path.split("."))
