@@ -30,7 +30,7 @@ public class Post {
     private PostState state = PostState.CREATED;
 
     // BEGIN
-    boolean publish() {
+    public boolean publish() {
         if (state == PostState.CREATED) {
             state = PostState.PUBLISHED;
             return true;
@@ -38,7 +38,7 @@ public class Post {
         return false;
     }
 
-    boolean archive() {
+    public boolean archive() {
         if (state == PostState.CREATED || state == PostState.PUBLISHED) {
             state = PostState.ARCHIVED;
             return true;
