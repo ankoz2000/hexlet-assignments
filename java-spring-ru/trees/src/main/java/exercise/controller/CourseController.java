@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -34,11 +35,12 @@ public class CourseController {
     public List<Course> getCourses(@PathVariable long id) {
         Course targetCourse = courseRepository.findById(id);
         String path = targetCourse.getPath();
-        List<Course> coursesToPass = Arrays.asList(path.split("."))
-                .stream()
-                .map(pid -> courseRepository.findById(Integer.parseInt(pid)))
-                .collect(Collectors.toList());
-        return coursesToPass;
+        if (path != null) {
+            List<String> sb = Arrays.asList(path.split("\\."));
+            return sb.stream()
+                    .map(pid -> courseRepository.findById(Integer.parseInt(pid)))
+                    .collect(Collectors.toList());
+        } else return new ArrayList<>();
     }
 
     // END
