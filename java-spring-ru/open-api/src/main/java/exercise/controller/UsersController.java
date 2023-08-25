@@ -98,11 +98,11 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "User with that id not found")
     })
     @PatchMapping(path = "/{id}")
-    public User deleteUser(
+    public User patchUser(
             @Parameter(description = "Id of user to be patched")
             @PathVariable long id,
             @Parameter(description = "DTO of user to be patched")
-            @PathVariable UserDto dto) {
+            @RequestBody UserDto dto) {
         // Проверяем, существует ли пользователь с таким id
         if (!userRepository.existsById(id)) {
             // Если не существует, возвращаем код ответа 404
