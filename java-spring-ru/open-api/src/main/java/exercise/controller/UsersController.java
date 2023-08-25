@@ -110,9 +110,9 @@ public class UsersController {
         }
         User user = new User();
         user.setId(id);
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
         return userRepository.save(user);
     }
     // END
