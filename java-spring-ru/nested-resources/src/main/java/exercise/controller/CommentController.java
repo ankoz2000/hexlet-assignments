@@ -36,7 +36,9 @@ public class CommentController {
         if (!commentRepository.existsById(commentId)) {
             throw new ResourceNotFoundException("No comment");
         }
-        return commentRepository.getCommentByIdAndPostId(commentId, postId);
+        Comment comment = commentRepository.getCommentByIdAndPostId(commentId, postId);
+        if (comment != null) return comment;
+        else throw new ResourceNotFoundException("No comment");
     }
 
     @PostMapping("/{postId}/comments")
@@ -82,7 +84,9 @@ public class CommentController {
         if (!commentRepository.existsById(commentId)) {
             throw new ResourceNotFoundException("No comment");
         }
-        commentRepository.deleteById(commentId);
+        Comment comment = commentRepository.getCommentByIdAndPostId(commentId, postId);
+        if (comment != null) commentRepository.delete(comment);
+        else throw new ResourceNotFoundException("No comment");
     }
     // END
 }
