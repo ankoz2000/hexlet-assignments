@@ -10,60 +10,87 @@ import java.util.stream.Stream;
 class App {
 
     // BEGIN
-    public static CompletableFuture<String> unionFiles(String src1, String src2, String dest) throws NoSuchFileException {
-        Path pathToSrc1 = Paths.get(src1);
-        Path pathToSrc2 = Paths.get(src2);
-        Path pathToDest = Paths.get(dest);
-        if (Files.exists(pathToSrc1) && Files.exists(pathToSrc2)) {
-            CompletableFuture<String> first = CompletableFuture.supplyAsync(() -> {
-                try {
-                    return Files.readAllLines(pathToSrc1).stream()
-                            .collect(Collectors.joining());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return "";
-            }).exceptionally((ex) -> {
-                        System.out.println("Ex: " + ex.getMessage());
-                        return null;
-            });
-            CompletableFuture<String> second = CompletableFuture.supplyAsync(() -> {
-                try {
-                    return Files.readAllLines(pathToSrc2).stream()
-                            .collect(Collectors.joining());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return "";
-            }).exceptionally((ex) -> {
-                System.out.println("Ex: " + ex.getMessage());
-                return null;
-            });
+    private static Path getFullPath(String filePath) {
+        return Paths.get(filePath).toAbsolutePath().normalize();
+    }
 
-            CompletableFuture<String> result = first.thenCombine(second, (f, s) -> {
-                String res = f + s;
-                try {
-                    Files.write(pathToDest, res.getBytes(), StandardOpenOption.CREATE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return res;
-            });
+    public static CompletableFuture<String> unionFiles(String source1, String source2, String dest) {
 
-            return result;
-        } else {
-            throw new NoSuchFileException("NoSuchFileException");
-        }
+        CompletableFuture<String> content1 = CompletableFuture.supplyAsync(() -> {
+            String content = "";
+
+            try {
+                content = Files.readString(getFullPath(source1));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return content;
+        });
+
+        CompletableFuture<String> content2 = CompletableFuture.supplyAsync(() -> {
+
+            String content = "";
+            try {
+                content = Files.readString(getFullPath(source2));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return content;
+        });
+
+        return content1.thenCombine(content2, (cont1, cont2) -> {
+            String union = cont1 + cont2;
+            try {
+                Files.writeString(getFullPath(dest), union, StandardOpenOption.CREATE);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return "ok!";
+
+        }).exceptionally(ex -> {
+            System.out.println("Oops! We have an exception - " + ex.getMessage());
+            return "Unknown!";
+        });
+    }
+
+    public static CompletableFuture<Long> getDirectorySize(String path) {
+
+        return CompletableFuture.supplyAsync(() -> {
+            Long size;
+            try {
+                size = Files.walk(getFullPath(path), 1)
+                        .filter(Files::isRegularFile)
+                        .mapToLong(p -> {
+                            try {
+                                return Files.size(p);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        })
+                        .sum();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return size;
+
+        }).exceptionally(ex -> {
+            System.out.println("Oops! We have an exception - " + ex.getMessage());
+            return null;
+        });
     }
     // END
 
     public static void main(String[] args) throws Exception {
         // BEGIN
-        unionFiles("src/resources/file1.txt", "src/resources/file2.txt", "src/resources/file3.txt")
-                .exceptionally(throwable -> {
-                    System.out.println(throwable.getMessage());
-                    return null;
-                });
+        CompletableFuture<String> result = unionFiles(
+                "src/main/resources/file1.txt",
+                "src/main/resources/file2.txt",
+                "src/main/resources/dest.txt"
+        );
+        CompletableFuture<Long> size = getDirectorySize("src/main/resources");
+        result.get();
+        System.out.println("done!");
+        System.out.println(size.get());
         // END
     }
 }
