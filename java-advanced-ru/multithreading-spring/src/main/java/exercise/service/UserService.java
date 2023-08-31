@@ -20,19 +20,20 @@ public class UserService {
     }
 
     // BEGIN
-    public Mono<User> add(User user) {
+    public Mono<User> create(User user) {
         return userRepository.save(user);
     }
 
-    public Mono<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Mono<User> findById(int userId) {
+        return userRepository.findById(userId);
     }
 
-    public Mono<User> update(User user) {
+    public Mono<User> update(int userId, User user) {
+        user.setId(userId);
         return userRepository.save(user);
     }
 
-    public Mono<Void> delete(Long id) {
+    public Mono<Void> delete(Integer id) {
         return userRepository.deleteById(id);
     }
     // END
